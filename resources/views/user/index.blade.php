@@ -33,7 +33,7 @@
                                             <th>No</th>
                                             <th>Name</th>
                                             <th>Username</th>
-                                            <th>Status</th>
+                                            <th>Role</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -47,7 +47,7 @@
                                                 <td>{{ $no++ }}</td>
                                                 <td>{{ $data->name }}</td>
                                                 <td>{{ $data->email }}</td>
-                                                <td>{{ $data->status }}</td>
+                                                <td>{{ $data->role }}</td>
                                                 <td>
                                                     <div class="au-btn-group text-center" role="group">
                                                         <a type="button" class="btn btn-light btn-sm" href="{{ route('user.edit', $data->id) }}" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></a>

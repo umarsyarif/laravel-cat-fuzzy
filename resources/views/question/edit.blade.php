@@ -1,3 +1,7 @@
+@php
+    $title = ""
+@endphp
+
 @extends('layouts.admin_template')
 @section('content')
 
@@ -18,12 +22,12 @@
                                 <div class="alert alert-primary alert-missible">
                                     {{ $message }}
                                     <button class="close" type="button" data-dismiss="alert">x</button>
-                                </div>  
+                                </div>
                             @elseif ($message = Session::get('failed'))
                                 <div class="alert alert-danger alert-missible">
                                     {{ $message }}
                                     <button class="close" type="button" data-dismiss="alert">x</button>
-                                </div>  
+                                </div>
                             @endif
                                 <div class="card">
                                     <div class="card-body card-block">
@@ -95,5 +99,5 @@
 @endsection
 
 @push('scriptsjs')
-    
+
 @endpush

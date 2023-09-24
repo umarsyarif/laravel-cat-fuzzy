@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->integer('studentexam_id');
             $table->integer('question_id');
-            $table->string('answer');
-            $table->boolean('is_correct');
+            $table->string('answer')->nullable();
+            $table->boolean('is_correct')->nullable();
             $table->timestamps();
         });
     }

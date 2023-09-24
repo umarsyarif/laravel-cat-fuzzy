@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->integer('student_id');
             $table->integer('exam_id');
-            $table->double('final_score');
-            $table->timestamp('started_at');
-            $table->timestamp('ended_at');
+            $table->double('final_score')->nullable();
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('ended_at')->nullable();
             $table->timestamps();
         });
     }

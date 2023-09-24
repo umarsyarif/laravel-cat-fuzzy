@@ -39,8 +39,7 @@ class RoleSeeder extends Seeder
             'name' => "Admin",
             'username' => "admin",
             'email' => "asd@asd.asd",
-            'role_id' => 1,
-            'status' => "test",
+            'role' => "Admin",
             'password' => Hash::make("123456")
         ]);
     }

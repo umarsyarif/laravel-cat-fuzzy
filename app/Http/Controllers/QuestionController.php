@@ -13,7 +13,11 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $data = [];
+        $questions = Question::all();
+
+        $data = [
+            'questions' => $questions
+        ];
         return view('question.index', $data);
     }
 

@@ -16,10 +16,11 @@ class UserController extends Controller
     public function index()
     {
         //halaman index
-        $users         = User::all();
-        $datapengguna  = 'active';
-        $titlepage     = 'Data Pengguna';
-        return view('user.index', compact('datapengguna', 'titlepage', 'users'));
+        $users = User::admin()->get();
+        $data = [
+            'users' => $users
+        ];
+        return view('user.index', $data);
     }
 
     /**

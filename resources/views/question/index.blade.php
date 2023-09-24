@@ -1,3 +1,7 @@
+@php
+    $title = ""
+@endphp
+
 @extends('layouts.admin_template')
 @section('content')
 
@@ -11,19 +15,19 @@
                         </div>
                         <div class="card-body">
                             <div class="card-title">
-                                <a class='btn btn-light' href="{{ route('banksoals.create') }}"><i class="fas fa-plus"></i>&ensp;Tambah</a>
+                                <a class='btn btn-light' href="{{ route('question.create') }}"><i class="fas fa-plus"></i>&ensp;Tambah</a>
                             </div>
                             {{-- display erorr --}}
                             @if ($message = Session::get('success'))
                                 <div class="alert alert-primary alert-missible">
                                     {{ $message }}
                                     <button class="close" type="button" data-dismiss="alert">x</button>
-                                </div>  
+                                </div>
                             @elseif ($message = Session::get('failed'))
                                 <div class="alert alert-danger alert-missible">
                                     {{ $message }}
                                     <button class="close" type="button" data-dismiss="alert">x</button>
-                                </div>  
+                                </div>
                             @endif
 
                             <div class="table-responsive">
@@ -40,31 +44,23 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php
-                                            $no =1;
-                                        @endphp
-
-                                        @forelse ($banksoals as $data)
+                                        @foreach ($questions as $row)
                                             <tr>
-                                                <td>{{ $no++ }}</td>
-                                                <td>{{ $data->kodesoal }}</td>
-                                                <td>{{ $data->soal }}</td>
-                                                <td>{{ $data->level }}</td>
-                                                <td>{{ $data->daya }}</td>
-                                                <td>{{ $data->skor }}</td>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $row->kodesoal }}</td>
+                                                <td>{{ $row->soal }}</td>
+                                                <td>{{ $row->level }}</td>
+                                                <td>{{ $row->daya }}</td>
+                                                <td>{{ $row->skor }}</td>
                                                 <td>
                                                     <div class="au-btn-group text-center" role="group">
-                                                        <a class="btn btn-light btn-sm" href="{{ route('banksoals.edit', $data->id) }}" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></a>
-                                                        <button type="button" data-target="#hapussoal{{ $data->id }}" class="btn btn-light btn-sm" data-placement="top" title="Delete" data-toggle="modal" data-target="#hapususer"><i class="fas fa-trash"></i></button>
+                                                        <a class="btn btn-light btn-sm" href="{{ route('question.edit', $row->id) }}" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></a>
+                                                        <button type="button" data-target="#hapussoal{{ $row->id }}" class="btn btn-light btn-sm" data-placement="top" title="Delete" data-toggle="modal" data-target="#hapususer"><i class="fas fa-trash"></i></button>
                                                     </div>
                                                 </td>
                                             </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="4">Tidak ada data</td>
-                                            </tr>
-                                        @endforelse
-                                        
+                                        @endforeach
+
                                     </tbody>
                                 </table>
                             </div>
@@ -77,9 +73,9 @@
 </div>
 
 <!-- isi data baru -->
-@foreach ($banksoals as $data)
+@foreach ($questions as $row)
 
-<div class="modal fade" id="hapussoal{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
+<div class="modal fade" id="hapussoal{{ $row->id }}" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -93,12 +89,12 @@
             <div class="modal-body">
                 <div class="card">
                     <div class="card-body card-block">
-                    <form action="{{ route('banksoals.destroy', $data->id) }}" method="POST" enctype="multipart/form-data" class="form-horizontal">
+                    <form action="{{ route('question.destroy', $row->id) }}" method="POST" enctype="multipart/form-data" class="form-horizontal">
                         @csrf
                         @method('DELETE')
                             <div class="row form-group">
                                 <div class="col col-md justify-content">
-                                    <label>Apakah anda ingin menghapus Soal dengan kode <b style="color: red">{{ $data->kodesoal }}</b> ini ?</label>
+                                    <label>Apakah anda ingin menghapus Soal dengan kode <b style="color: red">{{ $row->kodesoal }}</b> ini ?</label>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -120,5 +116,5 @@
 @endsection
 
 @push('scriptsjs')
-    
+
 @endpush
