@@ -18,37 +18,43 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
-// halaman login
-Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
-Route::post('/login', [AuthController::class, 'authenthicate'])->middleware('guest');
-Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
-
-
-// User Routes
-Route::prefix('user')->name('user.')->group(function () {
-    Route::get('/', [UserController::class, 'index'])->name('index');
-    Route::get('/create', [UserController::class, 'create'])->name('create');
-    Route::post('/', [UserController::class, 'store'])->name('store');
-    Route::get('/edit', [UserController::class, 'edit'])->name('edit');
-    Route::put('/{user}', [UserController::class, 'update'])->name('update');
-    Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
+    Route::post('/login', [AuthController::class, 'authenthicate'])->middleware('guest');
 });
 
-// Student Routes
-Route::prefix('student')->name('student.')->group(function () {
-    Route::get('/', [StudentController::class, 'index'])->name('index');
-    Route::get('/create', [StudentController::class, 'create'])->name('create');
-    Route::post('/', [StudentController::class, 'store'])->name('store');
-    Route::get('/edit', [StudentController::class, 'edit'])->name('edit');
-    Route::put('/{student}', [StudentController::class, 'update'])->name('update');
-    Route::delete('/{student}', [StudentController::class, 'destroy'])->name('destroy');
-});
+Route::middleware('auth')->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-// Question Routes
-Route::prefix('question')->name('question.')->group(function () {
-    Route::get('/', [QuestionController::class, 'index'])->name('index');
-    Route::get('/create', [QuestionController::class, 'create'])->name('create');
-    Route::get('/edit', [QuestionController::class, 'edit'])->name('edit');
+    // User Routes
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('/create', [UserController::class, 'create'])->name('create');
+        Route::post('/', [UserController::class, 'store'])->name('store');
+        Route::get('/edit', [UserController::class, 'edit'])->name('edit');
+        Route::put('/{user}', [UserController::class, 'update'])->name('update');
+        Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
+    });
+
+    // Student Routes
+    Route::prefix('student')->name('student.')->group(function () {
+        Route::get('/', [StudentController::class, 'index'])->name('index');
+        Route::get('/create', [StudentController::class, 'create'])->name('create');
+        Route::post('/', [StudentController::class, 'store'])->name('store');
+        Route::get('/edit', [StudentController::class, 'edit'])->name('edit');
+        Route::put('/{student}', [StudentController::class, 'update'])->name('update');
+        Route::delete('/{student}', [StudentController::class, 'destroy'])->name('destroy');
+    });
+
+    // Question Routes
+    Route::prefix('question')->name('question.')->group(function () {
+        Route::get('/', [QuestionController::class, 'index'])->name('index');
+        Route::get('/create', [QuestionController::class, 'create'])->name('create');
+        Route::post('/', [QuestionController::class, 'store'])->name('store');
+        Route::get('/edit', [QuestionController::class, 'edit'])->name('edit');
+        Route::put('/{question}', [QuestionController::class, 'update'])->name('update');
+        Route::delete('/{question}', [QuestionController::class, 'destroy'])->name('destroy');
+    });
 });

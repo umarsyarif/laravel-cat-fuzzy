@@ -35,11 +35,9 @@
                                     <thead class="text-white" style="background-color: #365cad;">
                                         <tr>
                                             <th>No</th>
-                                            <th>Kode Soal</th>
                                             <th>Soal</th>
                                             <th>Indeks Daya Beda</th>
                                             <th>Indeks Kesukaran</th>
-                                            <th>Nilai</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -47,13 +45,11 @@
                                         @foreach ($questions as $row)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $row->kodesoal }}</td>
-                                                <td>{{ $row->soal }}</td>
-                                                <td>{{ $row->level }}</td>
-                                                <td>{{ $row->daya }}</td>
-                                                <td>{{ $row->skor }}</td>
+                                                <td>{{ $row->question }}</td>
+                                                <td>{{ $row->value }}</td>
+                                                <td>{{ $row->category }}</td>
                                                 <td>
-                                                    <div class="au-btn-group text-center" role="group">
+                                                    <div class="au-btn-group text-center d-flex" role="group">
                                                         <a class="btn btn-light btn-sm" href="{{ route('question.edit', $row->id) }}" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></a>
                                                         <button type="button" data-target="#hapussoal{{ $row->id }}" class="btn btn-light btn-sm" data-placement="top" title="Delete" data-toggle="modal" data-target="#hapususer"><i class="fas fa-trash"></i></button>
                                                     </div>

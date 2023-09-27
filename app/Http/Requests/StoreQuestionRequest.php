@@ -23,10 +23,10 @@ class StoreQuestionRequest extends FormRequest
     {
         return [
             'question' => ['required', 'string', 'max:255'],
-            'multiple_choice' => ['required', 'string', 'max:255'],
-            'answer' => ['required', 'string', 'max:255'],
-            'category' => ['required', 'string', 'max:255'],
-            'value' => ['required', 'numeric', 'max:255'],
+            'multiple_choice' => ['required'],
+            'answer' => ['required'],
+            'category' => ['required'],
+            'value' => ['required'],
         ];
     }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('question');
             $table->json('multiple_choice');
             $table->string('answer');
-            $table->enum('category', ['Mudah', 'Sedang', 'Sulit']);
+            $table->enum('category', ['Mudah', 'Menengah', 'Sulit']);
             $table->double('value');
             $table->timestamps();
         });

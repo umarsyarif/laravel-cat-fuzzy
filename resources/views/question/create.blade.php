@@ -8,7 +8,7 @@
                             <h5 class="m-0 font-weight-bold">
                                 <i class="fas fa-plus"></i>&ensp;Tambah Soal
                             </h5>
-                            <a type="button" href="{{ route('banksoals.index') }}" class="close" data-dismiss="modal" aria-label="Close">
+                            <a type="button" href="{{ route('question.index') }}" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </a>
                         </div>
@@ -18,16 +18,16 @@
                                 <div class="alert alert-primary alert-missible">
                                     {{ $message }}
                                     <button class="close" type="button" data-dismiss="alert">x</button>
-                                </div>  
+                                </div>
                             @elseif ($message = Session::get('failed'))
                                 <div class="alert alert-danger alert-missible">
                                     {{ $message }}
                                     <button class="close" type="button" data-dismiss="alert">x</button>
-                                </div>  
+                                </div>
                             @endif
                                 <div class="card">
                                     <div class="card-body card-block">
-                                    <form action="{{ route('banksoals.store') }}" method="POST" enctype="multipart/form-data" class="form-horizontal">
+                                    <form action="{{ route('question.store') }}" method="POST" enctype="multipart/form-data" class="form-horizontal">
                                         @csrf
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
@@ -51,7 +51,7 @@
                                                 </div>
                                                 <div class="col-12 col-md-9">
                                                     <input required type="text" name="daya" placeholder="Masukan indeks daya beda" class="form-control">
-                                                </div>  
+                                                </div>
                                             </div>
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
@@ -59,7 +59,7 @@
                                                 </div>
                                                 <div class="col-12 col-md-9">
                                                     <input required type="text" name="level" placeholder="Masukan indeks data kesukaran" class="form-control">
-                                                </div>  
+                                                </div>
                                             </div>
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
@@ -67,7 +67,7 @@
                                                 </div>
                                                 <div class="col-12 col-md-9">
                                                     <input required type="text" name="skor" placeholder="Masukan nilai soal" class="form-control">
-                                                </div>  
+                                                </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <input type="submit" name="save" class="btn btn-primary"value="Simpan">
@@ -94,5 +94,5 @@
 @endsection
 
 @push('scriptsjs')
-    
+
 @endpush

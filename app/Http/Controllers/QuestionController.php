@@ -70,7 +70,6 @@ class QuestionController extends Controller
      */
     public function update(UpdateQuestionRequest $request, Question $question)
     {
-        //update
         try {
             $question->update($request->validated());
 
