@@ -25,6 +25,15 @@
                                     <button class="close" type="button" data-dismiss="alert">x</button>
                                 </div>
                             @endif
+                            @if ($errors->any())
+                                <div class="alert alert-danger alert-missible">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                                 <div class="card">
                                     <div class="card-body card-block">
                                     <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data" class="form-horizontal">

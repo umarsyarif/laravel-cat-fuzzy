@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [QuestionController::class, 'index'])->name('index');
         Route::get('/create', [QuestionController::class, 'create'])->name('create');
         Route::post('/', [QuestionController::class, 'store'])->name('store');
-        Route::get('/edit', [QuestionController::class, 'edit'])->name('edit');
+        Route::get('/edit/{question}', [QuestionController::class, 'edit'])->name('edit');
         Route::put('/{question}', [QuestionController::class, 'update'])->name('update');
         Route::delete('/{question}', [QuestionController::class, 'destroy'])->name('destroy');
     });

@@ -27,11 +27,10 @@ class QuestionSeeder extends Seeder
                     'category' => $row,
                     'question' => $faker->sentence(),
                     'multiple_choice' => [
-                        ['pilihan' => 'A', 'text' => $faker->text($maxNbChars = 20)],
-                        ['pilihan' => 'B', 'text' => $faker->text($maxNbChars = 20)],
-                        ['pilihan' => 'C', 'text' => $faker->text($maxNbChars = 20)],
-                        ['pilihan' => 'D', 'text' => $faker->text($maxNbChars = 20)],
-                        ['pilihan' => 'E', 'text' => $faker->text($maxNbChars = 20)]
+                        'A' => $faker->text(20),
+                        'B' => $faker->text(20),
+                        'C' => $faker->text(20),
+                        'D' => $faker->text(20)
                     ],
                     'answer' => 'A',
                     'value' => $this->getValueByCategory($row)

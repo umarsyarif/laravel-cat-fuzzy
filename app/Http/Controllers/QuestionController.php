@@ -13,7 +13,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::all();
+        $questions = Question::latest()->get();
 
         $data = [
             'questions' => $questions
@@ -87,7 +87,7 @@ class QuestionController extends Controller
     public function destroy(Question $question)
     {
         if (!$question) {
-            return redirect()->route('banks.index')->with(['success' => 'Soal tidak berhasil dihapus']);
+            return redirect()->route('banks.index')->with(['failed' => 'Soal tidak berhasil dihapus']);
         }
 
         $question->delete();

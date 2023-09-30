@@ -10,7 +10,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>CAT-UAS SMPN 04 Rumbio Jaya | @if(isset($titlepage)) {{ $titlepage }} @endif</title>
+    <title>CAT-UAS SMPN 04 Rumbio Jaya | @yield('title')</title>
 
     <!-- Fontfaces CSS-->
     <link href="{{ asset('assets/css/font-face.css') }}" rel="stylesheet" media="all">
@@ -107,7 +107,7 @@
     <script src="{{ asset('assets/js/main.js')}}"></script>
 
     {{-- data tables --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>t>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     {{-- <script src="{{ asset('assets/js/datatables-simple-demo.js') }}"></script> --}}
     <script src="{{ asset('assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
