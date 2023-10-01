@@ -94,7 +94,7 @@
     <!-- Page level custom scripts -->
     <script src="{{ asset('assets/js/demo/datatables-demo.js') }}"></script>
 
-    @stack('scriptjs')
+    @stack('scripts')
 
 </body>
 

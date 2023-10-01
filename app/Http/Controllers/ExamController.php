@@ -13,7 +13,10 @@ class ExamController extends Controller
      */
     public function index()
     {
-        //
+        $data = [
+            'exams' => Exam::with('students')->get()
+        ];
+        return view('exam.index', $data);
     }
 
     /**
@@ -21,7 +24,8 @@ class ExamController extends Controller
      */
     public function create()
     {
-        //
+        $data = [];
+        return view('exam.create', $data);
     }
 
     /**
@@ -29,7 +33,15 @@ class ExamController extends Controller
      */
     public function store(StoreExamRequest $request)
     {
-        //
+        try {
+            Exam::create($request->validated());
+
+            return redirect()->back()->with(['success' => 'Ujian baru berhasil ditambahkan']);
+        }
+
+        catch (Exception $e) {
+            return redirect()->back()->with(['failed' => 'Data telah ada atau tidak sesuai silahkan dicek kembali']);
+        }
     }
 
     /**
@@ -45,7 +57,10 @@ class ExamController extends Controller
      */
     public function edit(Exam $exam)
     {
-        //
+        $data = [
+            'exam' => $exam
+        ];
+        return view('exam.edit', $data);
     }
 
     /**
@@ -53,7 +68,15 @@ class ExamController extends Controller
      */
     public function update(UpdateExamRequest $request, Exam $exam)
     {
-        //
+        try {
+            $exam->update($request->validated());
+
+            return redirect()->back()->with(['success' => 'Data ujian berhasil diubah']);
+        }
+
+        catch (Exception $e) {
+            return redirect()->back()->with(['failed' => 'Data ujian tidak berhasil diubah']);
+        }
     }
 
     /**
@@ -61,6 +84,11 @@ class ExamController extends Controller
      */
     public function destroy(Exam $exam)
     {
-        //
+        if (!$exam) {
+            return redirect()->route('exam.index')->with(['failed' => 'Soal tidak berhasil dihapus']);
+        }
+
+        $exam->delete();
+        return redirect()->route('exam.index')->with(['success' => 'Soal berhasil dihapus']);
     }
 }

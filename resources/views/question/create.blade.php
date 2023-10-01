@@ -20,7 +20,7 @@
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex justify-content-between">
                         <h5 class="m-0 font-weight-bold">
-                            <i class="fas fa-plus"></i>&ensp;Tambah Soal
+                            <i class="fas fa-plus"></i>&ensp;{{ $title }}
                         </h5>
                         <a type="button" href="{{ route('question.index') }}" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -68,6 +68,6 @@
 
 @endsection
 
-@push('scriptsjs')
+@push('scripts')
 
 @endpush

@@ -1,5 +1,5 @@
 @php
-    $title = 'Bank Soal - Edit Soal';
+    $title = 'Edit Ujian';
 @endphp
 @extends('layouts.admin_template')
 @section('title', $title)
@@ -21,7 +21,7 @@
                         <h5 class="m-0 font-weight-bold">
                             <i class="zmdi zmdi-edit"></i>&ensp;{{ $title }}
                         </h5>
-                        <a type="button" href="{{ route('question.index') }}" class="close" data-dismiss="modal" aria-label="Close">
+                        <a type="button" href="{{ route('exam.index') }}" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </a>
                     </div>
@@ -49,11 +49,11 @@
                         @endif
                         <div class="card">
                             <div class="card-body card-block">
-                                <form action="{{ route('question.update', $question->id) }}" method="POST" enctype="multipart/form-data" class="form-horizontal">
+                                <form action="{{ route('exam.update', $exam->id) }}" method="POST" enctype="multipart/form-data" class="form-horizontal">
                                     @method('PUT')
-                                    @include('question.question-form')
+                                    @include('exam.exam-form')
                                     <div class="modal-footer">
-                                        <a href="{{ route('question.index') }}" class="btn btn-danger">Batal</a>
+                                        <a href="{{ route('exam.index') }}" class="btn btn-danger">Batal</a>
                                         <button type="submit" class="btn btn-primary">Simpan</button>
                                     </div>
                                 </form>

@@ -33,9 +33,9 @@ $role = $user->role;
                         <i class="fas fa-table"></i>Bank Soal
                     </a>
                 </li>
-                <li class="{{ $currentUrl == route('dashboard') ? 'active' : '' }} has-sub">
-                    <a href="#">
-                        <i class="fas fa-chart-bar"></i>Nilai Siswa
+                <li class="{{ $currentUrl == route('exam.index') ? 'active' : '' }} has-sub">
+                    <a href="{{ route('exam.index') }}">
+                        <i class="fas fa-chart-bar"></i>Data Ujian
                     </a>
                 </li>
             </ul>

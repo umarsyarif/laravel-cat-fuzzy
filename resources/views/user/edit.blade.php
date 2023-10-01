@@ -21,7 +21,7 @@
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex justify-content-between">
                         <h5 class="m-0 font-weight-bold">
-                            <i class="zmdi zmdi-edit"></i>&ensp;Edit Pengguna
+                            <i class="zmdi zmdi-edit"></i>&ensp;{{ $title }}
                         </h5>
                         <a type="button" href="{{ route('user.index') }}" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -70,6 +70,6 @@
 
 @endsection
 
-@push('scriptsjs')
+@push('scripts')
 
 @endpush

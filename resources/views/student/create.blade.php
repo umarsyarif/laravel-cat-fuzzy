@@ -69,6 +69,6 @@
 
 @endsection
 
-@push('scriptsjs')
+@push('scripts')
 
 @endpush

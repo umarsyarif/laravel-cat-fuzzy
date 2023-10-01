@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
@@ -56,5 +57,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{question}', [QuestionController::class, 'edit'])->name('edit');
         Route::put('/{question}', [QuestionController::class, 'update'])->name('update');
         Route::delete('/{question}', [QuestionController::class, 'destroy'])->name('destroy');
+    });
+
+    // Exam Routes
+    Route::prefix('exam')->name('exam.')->group(function () {
+        Route::get('/', [ExamController::class, 'index'])->name('index');
+        Route::get('/create', [ExamController::class, 'create'])->name('create');
+        Route::post('/', [ExamController::class, 'store'])->name('store');
+        Route::get('/edit/{exam}', [ExamController::class, 'edit'])->name('edit');
+        Route::put('/{exam}', [ExamController::class, 'update'])->name('update');
+        Route::delete('/{exam}', [ExamController::class, 'destroy'])->name('destroy');
     });
 });

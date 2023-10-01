@@ -1,9 +1,10 @@
 @php
-    $title = 'Bank Soal - Edit Soal';
+    $title = 'Tambah Ujian';
 @endphp
 @extends('layouts.admin_template')
 @section('title', $title)
 @section('content')
+
 <div class="section__content section__content--p30">
     <div class="container-fluid">
         <div class="row">
@@ -15,13 +16,13 @@
             </div>
         </div>
         <div class="row m-t-25">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex justify-content-between">
                         <h5 class="m-0 font-weight-bold">
-                            <i class="zmdi zmdi-edit"></i>&ensp;{{ $title }}
+                            <i class="fas fa-plus"></i>&ensp;{{ $title }}
                         </h5>
-                        <a type="button" href="{{ route('question.index') }}" class="close" data-dismiss="modal" aria-label="Close">
+                        <a type="button" href="{{ route('exam.index') }}" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </a>
                     </div>
@@ -49,11 +50,10 @@
                         @endif
                         <div class="card">
                             <div class="card-body card-block">
-                                <form action="{{ route('question.update', $question->id) }}" method="POST" enctype="multipart/form-data" class="form-horizontal">
-                                    @method('PUT')
-                                    @include('question.question-form')
+                                <form action="{{ route('exam.store') }}" method="POST" class="form-horizontal">
+                                    @include('exam.exam-form')
                                     <div class="modal-footer">
-                                        <a href="{{ route('question.index') }}" class="btn btn-danger">Batal</a>
+                                        <a href="{{ route('exam.index') }}" class="btn btn-danger">Batal</a>
                                         <button type="submit" class="btn btn-primary">Simpan</button>
                                     </div>
                                 </form>

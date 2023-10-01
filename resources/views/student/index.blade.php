@@ -20,7 +20,7 @@
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex justify-content-between">
                         <h5 class="m-0 font-weight-bold">
-                            <i class="fas fa-user"></i>&ensp;Data Siswa
+                            <i class="fas fa-user"></i>&ensp;{{ $title }}
                         </h5>
                     </div>
                     <div class="card-body">
@@ -113,6 +113,6 @@
 
 @endsection
 
-@push('scriptsjs')
+@push('scripts')
 
 @endpush
