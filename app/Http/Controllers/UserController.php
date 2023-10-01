@@ -61,41 +61,29 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //fomr edit
-        $datapengguna  = 'active';
-        $titlepage     = 'Data Pengguna';
-        $edit = User::find($id);
-        return view('user.edit', compact('datapengguna', 'titlepage', 'edit'));
+        $data = [
+            'user' => $user];
+        return view('user.edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, string $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-
         try {
-            $user = User::find($id);
-
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->status = $request->status;
-
-            if ($request->passowrd != '') {
-                # code...
-                $user->password = Hash::make($request->password);
+            $validated = $request->safe()->except('password');
+            if(!empty($request->password)){
+                $validated['password'] = $request->password;
             }
-
-            $user->save();
+            $user->update($validated);
 
             return redirect()->back()->with(['success' => 'Data pengguna berhasil diubah']);
-
         }
 
         catch ( Exception $e) {
-            //throw $th;
             return redirect()->back()->with(['failed' => 'Data pengguna tidak berhasil diubah']);
         }
 
@@ -104,19 +92,13 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //delete
-        $user = User::find($id);
-
-        if ($user) {
-            # code...
-            $user->delete();
-            return redirect()->route('users.index')->with(['success' => 'Data pengguna berhasil dihapus']);
+        if (!$user) {
+            return redirect()->route('user.index')->with(['success' => 'Data pengguna tidak berhasil dihapus']);
         }
 
-        else {
-            return redirect()->route('users.index')->with(['success' => 'Data pengguna tidak berhasil dihapus']);
-        }
+        $user->delete();
+        return redirect()->route('user.index')->with(['success' => 'Data pengguna berhasil dihapus']);
     }
 }

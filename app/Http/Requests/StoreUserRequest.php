@@ -3,7 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use App\Enums\UserRoles;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Enum;
 
 class StoreUserRequest extends FormRequest
 {
@@ -12,7 +15,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -23,7 +26,10 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'unique:'.User::class]
+            'name' => ['required', 'string'],
+            'username' => ['required', 'unique:'.User::class],
+            'role' => ['required', new Enum(UserRoles::class)],
+            'password' => ['required', 'string']
         ];
     }
 }

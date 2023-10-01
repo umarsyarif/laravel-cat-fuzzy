@@ -61,12 +61,12 @@
                         <div class="alert alert-primary alert-missible">
                             {{ $message }}
                             <button class="close" type="button" data-dismiss="alert">x</button>
-                        </div>  
+                        </div>
                     @elseif ($message = Session::get('failed'))
                         <div class="alert alert-danger alert-missible">
                             {{ $message }}
                             <button class="close" type="button" data-dismiss="alert">x</button>
-                        </div>  
+                        </div>
                     @endif
                         <div class="login-logo text-justify">
                         <h3>Masuk Akun</h3>
@@ -77,7 +77,7 @@
                             @csrf
                             <div class="form-group">
                                 <label>Username</label>
-                                <input class="au-input au-input--full form-control" type="text" name="email" required autofocus autocomplete="username" placeholder="username">
+                                <input class="au-input au-input--full form-control" type="text" name="username" required autofocus autocomplete="username" placeholder="username" value="{{ old('username') }}">
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
@@ -118,7 +118,7 @@
     <script src="{{ asset('assets/js/main.js')}}"></script>
 
     {{-- data tables --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>t>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     {{-- <script src="{{ asset('assets/js/datatables-simple-demo.js') }}"></script> --}}
     <script src="{{ asset('assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>

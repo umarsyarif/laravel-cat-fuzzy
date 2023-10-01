@@ -10,9 +10,7 @@ class AuthController extends Controller
     //index
     public function login()
     {
-        //index login
-        $titlepage = 'Login';
-        return view('login', compact('titlepage'));
+        return view('login');
     }
 
     //login
@@ -20,7 +18,7 @@ class AuthController extends Controller
     {
         // validasi
         $credentials = $request->validate([
-            'email' => ['required'],
+            'username' => ['required'],
             'password' => ['required'],
         ]);
 
