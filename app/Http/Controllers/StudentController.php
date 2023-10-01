@@ -14,7 +14,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $data = [];
+        $data = [
+            'students' => Student::get()
+        ];
         return view('student.index', $data);
     }
 
@@ -32,6 +34,7 @@ class StudentController extends Controller
      */
     public function store(StoreStudentRequest $request)
     {
+        // return $request->validated();
         try {
             Student::create($request->validated());
 
@@ -39,7 +42,7 @@ class StudentController extends Controller
         }
 
         catch (Exception $e) {
-            return redirect()->back()->with(['failed' => 'Data telah ada. Silahkan dicek kembali']);
+            return redirect()->back()->with(['failed' => $e]);
         }
     }
 
@@ -56,7 +59,10 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+        $data = [
+            'student' => $student
+        ];
+        return view('student.edit', $data);
     }
 
     /**
@@ -64,14 +70,15 @@ class StudentController extends Controller
      */
     public function update(UpdateStudentRequest $request, Student $student)
     {
+        // return $request->validated();
         try {
             $student->update($request->validated());
 
-            return redirect()->back()->with(['success' => 'Data Siswa baru berhasil ditambahkan']);
+            return redirect()->back()->with(['success' => 'Data Siswa berhasil diubah']);
         }
 
         catch (Exception $e) {
-            return redirect()->back()->with(['failed' => 'Data telah ada. Silahkan dicek kembali']);
+            return redirect()->back()->with(['failed' => $e]);
         }
     }
 
@@ -80,6 +87,11 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        if (!$student) {
+            return redirect()->route('student.index')->with(['failed' => 'Siswa tidak berhasil dihapus']);
+        }
+
+        $student->delete();
+        return redirect()->route('student.index')->with(['success' => 'Siswa berhasil dihapus']);
     }
 }

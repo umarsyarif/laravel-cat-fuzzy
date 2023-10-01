@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Student;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreStudentRequest extends FormRequest
 {
@@ -12,7 +13,7 @@ class StoreStudentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -23,7 +24,10 @@ class StoreStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nisn' => ['required', 'string', 'unique:'.Student::class]
+            'nisn' => ['required', 'numeric', 'digits:10', 'unique:'.Student::class],
+            'name' => ['required'],
+            'gender' => ['required'],
+            'address' => ['required'],
         ];
     }
 }

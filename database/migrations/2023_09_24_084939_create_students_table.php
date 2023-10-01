@@ -16,6 +16,8 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('nisn')->unique();
             $table->string('name');
+            $table->enum('gender', ['Laki-Laki', 'Perempuan']);
+            $table->text('address');
             $table->timestamps();
         });
     }
