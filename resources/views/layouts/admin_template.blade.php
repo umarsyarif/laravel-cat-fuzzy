@@ -53,30 +53,8 @@
 
         <!-- MAIN CONTENT-->
         <div class="main-content">
-            <div class="section__content section__content--p30">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="overview-wrap">
-                                <h2 class="title-1">@if(isset($titlepage)) {{ $titlepage }} @endif</h2>
-                                <div class="au-breadcrumb-content">
-                                    <div class="au-breadcrumb-left">
-                                        <span class="au-breadcrumb-span">You are here:</span>
-                                        <ul class="list-unstyled list-inline au-breadcrumb__list">
-                                            <li class="list-inline-item active">
-                                                <p><b>@if(isset($titlepage)) {{ $titlepage }} @endif</b></p>
-                                            </li>
-                                            <li class="list-inline-item seprate">
-                                                <span>/</span>
-                                            </li>
-                                            <li class="list-inline-item">{{ Auth::user()->name }}</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        @yield('content')
+            @yield('content')
+        </div>
         <!-- END MAIN CONTENT-->
         <!-- END PAGE CONTAINER-->
 

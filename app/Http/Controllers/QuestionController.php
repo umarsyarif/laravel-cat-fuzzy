@@ -87,10 +87,10 @@ class QuestionController extends Controller
     public function destroy(Question $question)
     {
         if (!$question) {
-            return redirect()->route('banks.index')->with(['failed' => 'Soal tidak berhasil dihapus']);
+            return redirect()->route('question.index')->with(['failed' => 'Soal tidak berhasil dihapus']);
         }
 
         $question->delete();
-        return redirect()->route('banks.index')->with(['success' => 'Soal berhasil dihapus']);
+        return redirect()->route('question.index')->with(['success' => 'Soal berhasil dihapus']);
     }
 }
