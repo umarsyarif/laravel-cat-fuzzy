@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\ExamStudentQuestionController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
@@ -63,9 +64,15 @@ Route::middleware('auth')->group(function () {
     Route::prefix('exam')->name('exam.')->group(function () {
         Route::get('/', [ExamController::class, 'index'])->name('index');
         Route::get('/create', [ExamController::class, 'create'])->name('create');
+        Route::get('/{exam}', [ExamController::class, 'show'])->name('show');
         Route::post('/', [ExamController::class, 'store'])->name('store');
         Route::get('/edit/{exam}', [ExamController::class, 'edit'])->name('edit');
         Route::put('/{exam}', [ExamController::class, 'update'])->name('update');
         Route::delete('/{exam}', [ExamController::class, 'destroy'])->name('destroy');
+    });
+
+    // ExamStudentQuestion Routes
+    Route::prefix('examstudentquestion')->name('examstudentquestion.')->group(function () {
+        Route::put('/{examStudentQuestion}', [ExamStudentQuestionController::class, 'update'])->name('update');
     });
 });

@@ -69,7 +69,8 @@
                                             <td>{{ $row->students()->count() }}</td>
                                             <td>
                                                 <div class="au-btn-group text-center d-flex" role="group">
-                                                    <a class="btn btn-info btn-sm" href="{{ route('exam.edit', $row->id) }}" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></a>
+                                                    <a class="btn btn-warning btn-sm" href="{{ route('exam.show', $row->id) }}" data-placement="top" title="Hasil"><i class="fas fa-chart-bar"></i></a>
+                                                    <a class="btn btn-info btn-sm ml-1" href="{{ route('exam.edit', $row->id) }}" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></a>
                                                     <button type="button" data-target="#modal-delete-exam-{{$row->id}}" class="btn btn-danger btn-sm ml-1" data-placement="top" title="Delete" data-toggle="modal" data-target="#hapususer"><i class="fas fa-trash"></i></button>
                                                 </div>
                                             </td>

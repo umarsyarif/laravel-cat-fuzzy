@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use Database\Seeders\DatabaseSeeder;
 use Database\Seeders\QuestionSeeder;
+use Database\Seeders\StudentSeeder;
 use Database\Seeders\UserSeeder;
 use Illuminate\Console\Command;
 
@@ -28,7 +30,6 @@ class RefreshDatabase extends Command
     public function handle(): void
     {
         $this->call("migrate:fresh");
-        $this->call(UserSeeder::class);
-        $this->call(QuestionSeeder::class);
+        $this->call(DatabaseSeeder::class);
     }
 }

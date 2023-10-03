@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRoles;
 use App\Http\Requests\StoreExamRequest;
 use App\Http\Requests\UpdateExamRequest;
 use App\Models\Exam;
+use App\Models\ExamStudent;
+use App\Models\Question;
+use Illuminate\Support\Facades\Auth;
 
 class ExamController extends Controller
 {
@@ -49,7 +53,27 @@ class ExamController extends Controller
      */
     public function show(Exam $exam)
     {
-        //
+        $data = [];
+        $user = Auth::user();
+        if ($user->role == UserRoles::Student){
+            $examStudent = ExamStudent::with('questions')->firstOrCreate([
+                'student_id' => $user->student->id,
+                'exam_id' => $exam->id
+            ], [
+                'started_at' => now()
+            ]);
+            // cek if exam ended
+            $nextQuestion = $examStudent->getNextQuestion();
+            $data = [
+                'exam' => $exam,
+                'result' => $examStudent,
+                'examStudentQuestion' => $nextQuestion,
+                'question' => $nextQuestion?->question,
+            ];
+            // return $data;
+            return view('exam.student-show', $data);
+        }
+        return view('exam.show', $data);
     }
 
     /**

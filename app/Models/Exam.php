@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Auth;
 
 class Exam extends Model
 {
@@ -27,10 +30,23 @@ class Exam extends Model
         'is_active' => 'boolean',
     ];
 
-    public function Students() : BelongsToMany {
+    /**
+     * Scope a query to only include active exams.
+     */
+    public function scopeActive(Builder $query): void
+    {
+        $query->where('is_active', true);
+    }
+
+    public function students() : BelongsToMany {
         return $this->belongsToMany(Student::class)
+                ->using(ExamStudent::class)
                 ->as('result')
-                ->withPivot(['final_score', 'started_at', 'ended_at'])
-                ->withTimestamps();
+                ->withPivot(['final_score', 'started_at', 'ended_at']);
+    }
+
+    public function mine() : BelongsTo {
+        return $this->belongsTo(Student::class)
+                ->using(ExamStudent::class);
     }
 }

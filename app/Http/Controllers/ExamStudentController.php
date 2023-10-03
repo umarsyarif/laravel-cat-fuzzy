@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreStudentExamRequest;
-use App\Http\Requests\UpdateStudentExamRequest;
-use App\Models\StudentExam;
+use App\Http\Requests\StoreExamStudentRequest;
+use App\Http\Requests\UpdateExamStudentRequest;
+use App\Models\ExamStudent;
 
-class StudentExamController extends Controller
+class ExamStudentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class StudentExamController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreStudentExamRequest $request)
+    public function store(StoreExamStudentRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class StudentExamController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(StudentExam $studentExam)
+    public function show(ExamStudent $examStudent)
     {
         //
     }
@@ -43,7 +43,7 @@ class StudentExamController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(StudentExam $studentExam)
+    public function edit(ExamStudent $examStudent)
     {
         //
     }
@@ -51,7 +51,7 @@ class StudentExamController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateStudentExamRequest $request, StudentExam $studentExam)
+    public function update(UpdateExamStudentRequest $request, ExamStudent $examStudent)
     {
         //
     }
@@ -59,7 +59,7 @@ class StudentExamController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(StudentExam $studentExam)
+    public function destroy(ExamStudent $examStudent)
     {
         //
     }
