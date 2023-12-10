@@ -54,26 +54,11 @@ class ExamStudentQuestionController extends Controller
      */
     public function update(UpdateExamStudentQuestionRequest $request, ExamStudentQuestion $examStudentQuestion)
     {
-        // return $examStudentQuestion;
         $examStudentQuestion->update([
             'answer' => $request->answer,
             'is_correct' => $request->answer == $examStudentQuestion->question->answer
         ]);
-        // dd($examStudentQuestion->result);
         $exam = Exam::findOrFail($examStudentQuestion->result->exam_id);
-        $answeredQuestions = $examStudentQuestion->result->questions()->with('question')->get();
-
-        $isTotalQuestionsLimit = $answeredQuestions->count() == $exam->total_question;
-        $isLowerOrUpperLimit = ($examStudentQuestion->question->value == 0.1 && !$examStudentQuestion->is_correct)
-                                || ($examStudentQuestion->question->value == 1 && $examStudentQuestion->is_correct);
-
-        if ($isTotalQuestionsLimit || $isLowerOrUpperLimit){
-            // end the exam
-            $examStudentQuestion->result->update([
-                'ended_at' => now(),
-                'final_score' => $answeredQuestions->where('is_correct')->sum('question.value') / $answeredQuestions->sum('question.value') * 100
-            ]);
-        }
         return redirect()->route('exam.show', $exam->id);
     }
 

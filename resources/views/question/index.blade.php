@@ -40,23 +40,23 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered" id="dataTable-pagination" data-url="{{ route('question..api') }}" width="100%" cellspacing="0">
                                 <thead class="text-white" style="background-color: #365cad;">
                                     <tr>
-                                        <th>No</th>
+                                        <th>Kode Soal</th>
                                         <th>Soal</th>
-                                        <th>Indeks Daya Beda</th>
                                         <th>Indeks Kesukaran</th>
+                                        <th>Indeks Daya Beda</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                {{-- <tbody>
                                     @foreach ($questions as $row)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $row->question }}</td>
-                                            <td>{{ $row->value }}</td>
-                                            <td>{{ $row->category }}</td>
+                                            <td>{{ $row->difficulty_level }}</td>
+                                            <td>{{ $row->different_power }}</td>
                                             <td>
                                                 <div class="au-btn-group text-center d-flex" role="group">
                                                     <a class="btn btn-info btn-sm" href="{{ route('question.edit', $row->id) }}" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></a>
@@ -65,7 +65,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                </tbody>
+                                </tbody> --}}
                             </table>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                     @method('DELETE')
                     <div class="row form-group">
                         <div class="col col-md justify-content">
-                            <label>Apakah anda ingin menghapus Soal dengan kode <b style="color: red">123</b> ini ?</label>
+                            <label>Apakah anda ingin menghapus Soal dengan kode <b style="color: red">{{ $row->question_code }}</b> ini ?</label>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -109,5 +109,56 @@
 @endsection
 
 @push('scripts')
+<script>
+    // Call the dataTables jQuery plugin
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $(document).ready(function() {
+        $('#dataTable').DataTable();
 
+        const table = $('#dataTable-pagination');
+        const dataUrl = table.data('url');
+        table.DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: dataUrl,
+                type: "POST",
+                data: function (data) {
+                    data.search = $('input[type="search"]').val();
+                }
+            },
+            order: ['0', 'DESC'],
+            pageLength: 10,
+            searching: true,
+            aoColumns: [
+                {
+                    data: 'question_code',
+                },
+                {
+                    data: 'question',
+                },
+                {
+                    data: 'difficulty_level',
+                },
+                {
+                    data: 'different_power',
+                },
+                {
+                    data: 'id',
+                    width: "20%",
+                    render: function(data, type, row) {
+                        return `<div class="au-btn-group text-center d-flex" role="group">
+                                    <a class="btn btn-info btn-sm" href="{{ route('question.index') }}/edit/${data}" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></a>
+                                    <button type="button" data-target="#modal-delete-question-{{$row->id}}" class="btn btn-danger btn-sm ml-1" data-placement="top" title="Delete" data-toggle="modal" data-target="#hapususer"><i class="fas fa-trash"></i></button>
+                                </div>`;
+                    }
+                }
+            ]
+        });
+    });
+</script>
 @endpush

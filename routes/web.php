@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
     // Question Routes
     Route::prefix('question')->name('question.')->group(function () {
         Route::get('/', [QuestionController::class, 'index'])->name('index');
+        Route::post('/api', [QuestionController::class, 'questionList'])->name('.api');
         Route::get('/create', [QuestionController::class, 'create'])->name('create');
         Route::post('/', [QuestionController::class, 'store'])->name('store');
         Route::get('/edit/{question}', [QuestionController::class, 'edit'])->name('edit');

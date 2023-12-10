@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateExamRequest;
 use App\Models\Exam;
 use App\Models\ExamStudent;
 use App\Models\Question;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 
 class ExamController extends Controller
@@ -54,24 +55,8 @@ class ExamController extends Controller
     public function show(Exam $exam)
     {
         $data = [];
-        $user = Auth::user();
-        if ($user->role == UserRoles::Student){
-            $examStudent = ExamStudent::with('questions')->firstOrCreate([
-                'student_id' => $user->student->id,
-                'exam_id' => $exam->id
-            ], [
-                'started_at' => now()
-            ]);
-            // cek if exam ended
-            $nextQuestion = $examStudent->getNextQuestion();
-            $data = [
-                'exam' => $exam,
-                'result' => $examStudent,
-                'examStudentQuestion' => $nextQuestion,
-                'question' => $nextQuestion?->question,
-            ];
-            // return $data;
-            return view('exam.student-show', $data);
+        if (Auth::user()->role == UserRoles::Student){
+            return $this->showStudentExam($exam);
         }
         return view('exam.show', $data);
     }
@@ -114,5 +99,42 @@ class ExamController extends Controller
 
         $exam->delete();
         return redirect()->route('exam.index')->with(['success' => 'Soal berhasil dihapus']);
+    }
+
+    private function showStudentExam($exam)
+    {
+        $user = Auth::user();
+        // start the exam, or get the exam
+        $examStudent = ExamStudent::with('questions')->firstOrCreate([
+            'student_id' => $user->student->id,
+            'exam_id' => $exam->id
+        ], [
+            'started_at' => now()
+        ]);
+
+        // get next question
+        $nextQuestion = $examStudent->getNextQuestion();
+        $answeredQuestions = $examStudent->questions()->with('question')->get();
+
+        // stopping criteria
+        $isTotalQuestionsLimit = $answeredQuestions->count() == $exam->total_question;
+        $isLowerOrUpperLimit = is_null($nextQuestion);
+        $isTimeUp = date_diff(now(), $examStudent->started_at)->i >= $exam->timer;
+
+        // end the exam
+        if ($isTotalQuestionsLimit || $isLowerOrUpperLimit || $isTimeUp){
+            $examStudent->update([
+                'ended_at' => now(),
+                'final_score' => $answeredQuestions->where('is_correct')->sum('question.difficulty_level') / $answeredQuestions->sum('question.difficulty_level') * 100
+            ]);
+        }
+        $data = [
+            'exam' => $exam,
+            'result' => $examStudent,
+            'examStudentQuestion' => $nextQuestion,
+            'question' => $nextQuestion?->question,
+        ];
+        // return $data;
+        return view('exam.student-show', $data);
     }
 }

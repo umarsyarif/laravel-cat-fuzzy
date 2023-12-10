@@ -11,31 +11,34 @@ class ExamStudent extends Pivot
 {
     use HasFactory;
 
+    protected $casts = [
+        'started_at' => 'datetime',
+        'ended_at' => 'datetime',
+    ];
+
     public $incrementing = true;
 
-    public function getNextQuestion() : ExamStudentQuestion|null {
-        // don't return anything if exam ended
+    public function getNextQuestion() : ExamStudentQuestion | null {
+        // don't return anything if the exam ended
         if ($this->ended_at){
             return null;
         }
         $questions = $this->questions()->get();
-        // get 1st question
+        // if no question, create 1st question
         if (!$questions->count()){
             $newQuestion = Question::startingQuestion()->first();
             return $this->questions()->create(['question_id' => $newQuestion->id]);
-            // return $newQuestion;
         }
-        // return unanswered question
-        if ($questions->contains('answer', null)){
-            return $questions->whereNull('answer')->first();
+        // if there is a questions with no answer, return unanswered question
+        if ($questions->containsStrict('is_correct', null)){
+            return $questions->whereNull('is_correct')->first();
         }
-        // add new question
-        $answeredQuestion = $questions->whereNotNull('answer');
-        $isCorrect = $questions->last()->is_correct ? 0.1 : -0.1;
-        $newValue = $questions->last()->question->value + $isCorrect;
-        $newQuestion = Question::nextQuestion($answeredQuestion, $newValue)->first();
-        return $this->questions()->create(['question_id' => $newQuestion->id]);
-        // return $newQuestion;
+        // else, create new question
+        $lastQuestion = $questions->last();
+        $newTheta = $lastQuestion->question->new_theta;
+        $answeredQuestions = $questions->whereNotNull('is_correct');
+        $newQuestion = Question::nextQuestion($answeredQuestions, $newTheta, $lastQuestion->is_correct)->first();
+        return $newQuestion ? $this->questions()->create(['question_id' => $newQuestion->id]) : null;
     }
 
     public function questions() : HasMany {

@@ -26,8 +26,8 @@ class StoreQuestionRequest extends FormRequest
             'question' => 'required|string|max:255',
             'multiple_choice' => 'required',
             'answer' => 'required',
-            'category' => 'required',
-            'value' => 'required|numeric|between:0.1,1',
+            'difficulty_level' => 'required|numeric|between:-4,4',
+            'different_power' => 'required|numeric|between:0,2',
         ];
     }
 }

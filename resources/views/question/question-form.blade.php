@@ -20,22 +20,18 @@
 </div>
 <div class="row form-group">
     <div class="col col-md-3">
-        <label class="form-control-label">Indeks Daya Beda</label>
+        <label class="form-control-label">Indeks Kesukaran</label>
     </div>
     <div class="col-12 col-md-9">
-        <input required type="text" name="value" placeholder="Masukan indeks daya beda" class="form-control" value="{{ old('value', $question->value ?? '') }}">
+        <input required type="text" name="difficulty_level" placeholder="Masukan indeks kesukaran" class="form-control" value="{{ old('difficulty_level', $question->difficulty_level ?? '') }}">
     </div>
 </div>
 <div class="row form-group">
     <div class="col col-md-3">
-        <label class="form-control-label">Indeks Daya Kesukaran</label>
+        <label class="form-control-label">Indeks Daya Beda</label>
     </div>
     <div class="col-12 col-md-9">
-        <select required name="category" class="form-control" value="{{ old('category', $question->category ?? '') }}">
-            <option value="Mudah" {{ old('category', $question->category ?? '') == 'Mudah' ? 'selected' : '' }}>Mudah</option>
-            <option value="Menengah" {{ old('category', $question->category ?? '') == 'Menengah' ? 'selected' : '' }}>Menengah</option>
-            <option value="Sulit" {{ old('category', $question->category ?? '') == 'Sulit' ? 'selected' : '' }}>Sulit</option>
-        </select>
+        <input required type="text" name="different_power" placeholder="Masukan indeks daya beda" class="form-control" value="{{ old('different_power', $question->different_power ?? '') }}">
     </div>
 </div>
 <div class="row form-group">

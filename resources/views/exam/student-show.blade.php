@@ -1,11 +1,36 @@
 @extends('layouts.admin_template')
 @section('content')
-@if ($examStudentQuestion)
-    <div class="col-12 col-md-9">
+@if (!$result->ended_at)
+    <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <p>{{ $question->question }}</p>
-                <form action="{{ route('examstudentquestion.update', $examStudentQuestion->id) }}" method="POST">
+                <table class="w-100">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span>{{$exam->name}}</span>
+                            </td>
+                            <td class="text-right">
+                                <span id="cd-hours">00</span> :
+                                <span id="cd-minutes">00</span> :
+                                <span id="cd-seconds">00</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div style="height: 5px;" class="">
+                <div id="timer-per-question" class="h-100 bg-success"></div>
+            </div>
+            <div class="card-header">
+                <span>Index kesukaran : {{ $question->difficulty_level }}</span>
+                <span class="float-right">Index daya beda : {{ $question->different_power }}</span>
+            </div>
+            <div class="card-body">
+                <p><span>{{ $result->questions()->count() }}. </span>{{ $question->question }}</p>
+                <form id="form-question" action="{{ route('examstudentquestion.update', $examStudentQuestion->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form-check pl-0 d-flex align-items-center my-2">
@@ -73,8 +98,39 @@
                         </table>
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-header">
+                        Perhitungan
+                    </div>
+                    <div class="card-body">
+                        <table class="w-100 table table-borderless table-striped text-center">
+                            <tbody>
+                                <tr>
+                                    <th>KODE SOAL</th>
+                                    <th>Index Kesukaran</th>
+                                    <th>Index Daya Beda</th>
+                                    <th>Skor Jawaban</th>
+                                    <th>Theta</th>
+                                </tr>
+                                @foreach ($result->questions as $question)
+                                <tr>
+                                    <td>{{ $question->question->question_code }}</td>
+                                    <td>{{ $question->question->difficulty_level }}</td>
+                                    <td>{{ $question->question->different_power }}</td>
+                                    <td>{{ $question->is_correct }}</td>
+                                    <td>{{ number_format((float)$question->question->new_theta, 2, '.', '') }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 @foreach ($result->questions as $question)
                     <div class="card">
+                        <div class="card-header">
+                            <span>Index kesukaran : {{ $question->question->difficulty_level }}</span>
+                            <span class="float-right">Index daya beda : {{ $question->question->different_power }}</span>
+                        </div>
                         <div class="card-body">
                             <p>{{ $question->question->question }}</p>
                             <div class="form-check pl-0 d-flex align-items-center my-2">
@@ -117,3 +173,60 @@
 </div>
 @endif
 @endsection
+
+@push('scripts')
+@if (!$result->ended_at)
+    <script>
+        let timerPerQuestion = {{$exam->timer_per_question}};
+        const timerExam = {{$exam->timer}};
+        const startedAt = `{{$result->started_at}}`;
+        const form = $('#form-question');
+        $(document).ready(function() {
+            // timer per question
+            setInterval(() => setRemaining(), 1000);
+            setTimeout(() => console.log('habis'), {{$exam->timer_per_question * 1000}});
+            // timer exam
+            timer(startedAt);
+        });
+
+        function setTimer() {
+            const diff = (new Date().getTime() - new Date(startedAt).getTime()) / 60000;
+            const form = $('#form-question');
+            diff > timerExam && form.submit();
+        }
+
+        function setRemaining() {
+            timerPerQuestion = parseInt(timerPerQuestion - 1);
+            $('#timer-per-question').width(`${timerPerQuestion / {{$exam->timer_per_question}} * 100}%`);
+            console.log(timerPerQuestion);
+            const form = $('#form-question');
+            timerPerQuestion < 0 && form.submit();
+        }
+
+        let timer = function (date) {
+            const startedAt = new Date(date);
+            const timeUp = new Date(date);
+            timeUp.setMinutes(startedAt.getMinutes() + timerExam);
+            let timer = Math.round(timeUp.getTime()/1000) - Math.round(new Date().getTime()/1000);
+            let minutes, seconds;
+            setInterval(function () {
+                if (--timer < 0) {
+                    timer = 0;
+                    form.submit();
+                }
+                hours = parseInt((timer / 60 / 60) % 24, 10);
+                minutes = parseInt((timer / 60) % 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                hours = hours < 10 ? "0" + hours : hours;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                document.getElementById('cd-hours').innerHTML = hours;
+                document.getElementById('cd-minutes').innerHTML = minutes;
+                document.getElementById('cd-seconds').innerHTML = seconds;
+            }, 1000);
+        }
+    </script>
+@endif
+@endpush

@@ -10,7 +10,6 @@ use Faker\Factory as Faker;
 class QuestionSeeder extends Seeder
 {
     protected $faker;
-    protected $questionCountPerCategory = 50;
 
     /**
      * Run the database seeds.
@@ -19,37 +18,29 @@ class QuestionSeeder extends Seeder
     {
         $this->faker = Faker::create("id_ID");
         $faker = $this->faker;
+        $index = 1;
 
-        $categories = ['Mudah', 'Menengah', 'Sulit'];
-        for ($i=0; $i < $this->questionCountPerCategory; $i++) {
-            foreach ($categories as $row) {
-                Question::create([
-                    'category' => $row,
-                    'question' => $faker->sentence(),
-                    'multiple_choice' => [
-                        'A' => $faker->text(20),
-                        'B' => $faker->text(20),
-                        'C' => $faker->text(20),
-                        'D' => $faker->text(20)
-                    ],
-                    'answer' => 'A',
-                    'value' => $this->getValueByCategory($row)
-                ]);
-            }
+        // -4 >= difficulty level <= 4
+        for ($i = -4; $i <= 4; $i = $i + 0.01) {
+            Question::create([
+                'question_code' => 'M' . str_pad($index, 3, '0', STR_PAD_LEFT),
+                'question' => $faker->sentence(),
+                'multiple_choice' => [
+                    'A' => $faker->text(20),
+                    'B' => $faker->text(20),
+                    'C' => $faker->text(20),
+                    'D' => $faker->text(20)
+                ],
+                'answer' => 'A',
+                'difficulty_level' => $i,
+                'different_power' => $this->getDifferentPower()
+            ]);
+            $index++;
         }
     }
 
-    private function getValueByCategory($category){
-        $lowerLimit = [
-            'Mudah' => 0.1,
-            'Menengah' => 0.26,
-            'Sulit' => 0.51,
-        ];
-        $upperLimit = [
-            'Mudah' => 0.25,
-            'Menengah' => 0.50,
-            'Sulit' => 1,
-        ];
-        return $this->faker->randomFloat(1, $lowerLimit[$category], $upperLimit[$category]);
+    private function getDifferentPower(){
+        // 0 >= different power <= 2
+        return $this->faker->randomFloat(2, 0, 2);
     }
 }

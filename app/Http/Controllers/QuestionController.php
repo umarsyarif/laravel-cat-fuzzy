@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreQuestionRequest;
 use App\Http\Requests\UpdateQuestionRequest;
 use App\Models\Question;
+use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
@@ -13,12 +14,57 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::latest()->get();
+        $questions = Question::latest()->paginate(10);
 
         $data = [
             'questions' => $questions
         ];
         return view('question.index', $data);
+    }
+
+    function questionList(Request $request) {
+        // Page Length
+        $pageNumber = ( $request->start / $request->length )+1;
+        $pageLength = $request->length;
+        $skip       = ($pageNumber-1) * $pageLength;
+
+        // Page Order
+        $orderColumnIndex = $request->order[0]['column'] ?? '0';
+        $orderBy = $request->order[0]['dir'] ?? 'desc';
+
+        // get data from products table
+        $query = \DB::table('questions')->select('*');
+
+        // Search
+        $search = $request->search;
+        $query = $query->where(function($query) use ($search){
+            $query->orWhere('question_code', 'like', "%".$search."%");
+            $query->orWhere('question', 'like', "%".$search."%");
+            $query->orWhere('difficulty_level', 'like', "%".$search."%");
+            $query->orWhere('different_power', 'like', "%".$search."%");
+        });
+
+        $orderByName = 'question_code';
+        switch($orderColumnIndex){
+            case '0':
+                $orderByName = 'question_code';
+                break;
+            case '1':
+                $orderByName = 'question';
+                break;
+            case '2':
+                $orderByName = 'difficulty_level';
+                break;
+            case '3':
+                $orderByName = 'different_power';
+                break;
+
+        }
+        $query = $query->orderBy($orderByName, $orderBy);
+        $recordsFiltered = $recordsTotal = $query->count();
+        $questions = $query->skip($skip)->take($pageLength)->get();
+
+        return response()->json(["draw" => $request->draw, "recordsTotal" => $recordsTotal, "recordsFiltered" => $recordsFiltered, 'data' => $questions], 200);
     }
 
     /**
