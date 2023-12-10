@@ -203,10 +203,9 @@
             timerPerQuestion < 0 && form.submit();
         }
 
-        let timer = function (date) {
-            const startedAt = new Date(date);
+        const timer = function (date) {
             const timeUp = new Date(date);
-            timeUp.setMinutes(startedAt.getMinutes() + timerExam);
+            timeUp.setMinutes(timeUp.getMinutes() + timerExam);
             let timer = Math.round(timeUp.getTime()/1000) - Math.round(new Date().getTime()/1000);
             let minutes, seconds;
             setInterval(function () {
