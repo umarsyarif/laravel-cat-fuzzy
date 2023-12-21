@@ -13,12 +13,19 @@ return new class extends Migration
     {
         Schema::create('exam_student', function (Blueprint $table) {
             $table->id();
-            $table->integer('student_id');
-            $table->integer('exam_id');
+            $table->bigInteger('student_id')->unsigned()->index();
+            $table->bigInteger('exam_id')->unsigned()->index();
             $table->double('final_score')->nullable();
             $table->timestamp('started_at')->nullable();
             $table->timestamp('ended_at')->nullable();
             $table->timestamps();
+
+            $table->foreign('student_id')
+                ->references('id')->on('students')
+                ->onDelete('cascade');
+            $table->foreign('exam_id')
+                ->references('id')->on('exams')
+                ->onDelete('cascade');
         });
     }
 

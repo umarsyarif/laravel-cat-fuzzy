@@ -54,10 +54,14 @@ class ExamController extends Controller
      */
     public function show(Exam $exam)
     {
-        $data = [];
         if (Auth::user()->role == UserRoles::Student){
             return $this->showStudentExam($exam);
         }
+        $data = [
+            'exam' => $exam,
+            'students' => $exam->students()->get()
+        ];
+        // return $data;
         return view('exam.show', $data);
     }
 

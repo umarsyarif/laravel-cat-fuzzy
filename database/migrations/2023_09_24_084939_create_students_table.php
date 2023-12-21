@@ -13,12 +13,16 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->bigInteger('user_id')->unsigned()->index();
             $table->string('nisn')->unique();
             $table->string('name');
             $table->enum('gender', ['Laki-Laki', 'Perempuan']);
             $table->text('address');
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
         });
     }
 

@@ -49,11 +49,6 @@
                             <i class="fas fa-tachometer-alt"></i>Dashboard
                         </a>
                     </li>
-                    <li class="{{ $currentUrl == route('exam.index') ? 'active' : '' }} has-sub">
-                        <a href="{{ route('exam.index') }}">
-                            <i class="fas fa-chart-bar"></i>Data Ujian
-                        </a>
-                    </li>
                 @break
                 @default
 

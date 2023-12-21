@@ -13,11 +13,18 @@ return new class extends Migration
     {
         Schema::create('exam_student_questions', function (Blueprint $table) {
             $table->id();
-            $table->integer('exam_student_id');
-            $table->integer('question_id');
+            $table->bigInteger('exam_student_id')->unsigned()->index();
+            $table->bigInteger('question_id')->unsigned()->index();
             $table->string('answer')->nullable();
             $table->boolean('is_correct')->nullable();
             $table->timestamps();
+
+            $table->foreign('exam_student_id')
+                ->references('id')->on('exam_student')
+                ->onDelete('cascade');
+            $table->foreign('question_id')
+                ->references('id')->on('questions')
+                ->onDelete('cascade');
         });
     }
 

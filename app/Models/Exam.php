@@ -42,7 +42,7 @@ class Exam extends Model
         return $this->belongsToMany(Student::class)
                 ->using(ExamStudent::class)
                 ->as('result')
-                ->withPivot(['final_score', 'started_at', 'ended_at']);
+                ->withPivot(['id', 'final_score', 'started_at', 'ended_at']);
     }
 
     public function mine() : BelongsTo {
