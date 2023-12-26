@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Question extends Model
 {
@@ -17,6 +18,7 @@ class Question extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'question_code',
         'question',
         'multiple_choice',
         'answer',
@@ -33,10 +35,18 @@ class Question extends Model
         parent::boot();
 
         // Override creating
-        self::created(function (Question $model) {
-            $model->attributes['question_code'] = 'M' . str_pad($model->id, 3, '0', STR_PAD_LEFT);
-            $model->save();
-        });
+        // self::created(function (Question $model) {
+        //     $model->attributes['question_code'] = 'M' . str_pad($model->id, 3, '0', STR_PAD_LEFT);
+        //     $model->save();
+        // });
+    }
+
+    protected function questionCode(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => Str::upper($value),
+            get: fn ($value) => Str::upper($value),
+        );
     }
 
     protected function difficultyLevel(): Attribute

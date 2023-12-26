@@ -12,6 +12,14 @@
 @endif
 <div class="row form-group">
     <div class="col col-md-3">
+        <label class="form-control-label">Kode Soal</label>
+    </div>
+    <div class="col-12 col-md-9">
+        <input required type="text" name="question_code" placeholder="Masukan kode soal" class="form-control" value="{{ old('question_code', $question->question_code ?? '') }}" maxlength="6">
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col col-md-3">
         <label class="form-control-label">Soal</label>
     </div>
     <div class="col-12 col-md-9">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Question;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,11 +24,12 @@ class UpdateQuestionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'question' => 'required|string|max:255',
-            'multiple_choice' => 'required',
-            'answer' => 'required',
-            'difficulty_level' => 'required|numeric|between:-4,4',
-            'different_power' => 'required|numeric|between:0,2',
+            'question_code' => ['required', 'string', 'max:6', 'unique:'.Question::class.',question_code,'.$this->id],
+            'question' => ['required', 'string', 'max:255'],
+            'multiple_choice' => ['required'],
+            'answer' => ['required'],
+            'difficulty_level' => ['required', 'numeric', 'between:-4, 4'],
+            'different_power' => ['required', 'numeric', 'between:0, 2'],
         ];
     }
 }
