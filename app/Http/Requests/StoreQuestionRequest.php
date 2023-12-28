@@ -24,7 +24,7 @@ class StoreQuestionRequest extends FormRequest
     {
         return [
             'question_code' => 'required|string|max:6|unique:questions,question_code',
-            'question' => 'required|string|max:255',
+            'question' => 'required',
             'multiple_choice' => 'required',
             'answer' => 'required',
             'difficulty_level' => 'required|numeric|between:-4,4',

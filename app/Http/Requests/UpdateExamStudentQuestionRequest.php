@@ -23,7 +23,7 @@ class UpdateExamStudentQuestionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'answer' => ['required']
+            'answer' => ['nullable', 'regex:/[A-D]/']
         ];
     }
 }

@@ -25,7 +25,7 @@ class UpdateQuestionRequest extends FormRequest
     {
         return [
             'question_code' => ['required', 'string', 'max:6', 'unique:'.Question::class.',question_code,'.$this->id],
-            'question' => ['required', 'string', 'max:255'],
+            'question' => ['required'],
             'multiple_choice' => ['required'],
             'answer' => ['required'],
             'difficulty_level' => ['required', 'numeric', 'between:-4, 4'],

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Enums\UserRoles;
 use App\Models\Exam;
+use App\Models\Question;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +18,11 @@ class DashboardController extends Controller
     }
 
     private function getData(UserRoles $role) : array {
-        $data = [];
+        $data = [
+            'studentsCount' => Student::count(),
+            'questionsCount' => Question::count(),
+            'activeExamsCount' => Exam::where('is_active', 1)->count(),
+        ];
         if ($role == UserRoles::Student){
             $data = [
                 'exams' => Exam::with(['students' => fn($q) =>

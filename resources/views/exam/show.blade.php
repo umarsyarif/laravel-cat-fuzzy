@@ -137,7 +137,7 @@
                                     <span class="float-right">Index daya beda : {{ $question->question->different_power }}</span>
                                 </div>
                                 <div class="card-body">
-                                    <p>{{ $question->question->question }}</p>
+                                    <p><span>{{ $loop->iteration }}.</span> {!! $question->question->question !!}</p>
                                     <div class="form-check pl-0 d-flex align-items-center my-2">
                                         <label class="form-check-label" style="width: 15px">
                                             A

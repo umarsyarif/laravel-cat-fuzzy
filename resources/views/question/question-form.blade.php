@@ -23,7 +23,7 @@
         <label class="form-control-label">Soal</label>
     </div>
     <div class="col-12 col-md-9">
-        <textarea required type="textarea" name="question" placeholder="Masukan soal" class="form-control">{{ old('question', $question->question ?? '') }}</textarea>
+        <textarea type="textarea" name="question" placeholder="Masukan soal" class="form-control wysiwyg">{{ old('question', $question->question ?? '') }}</textarea>
     </div>
 </div>
 <div class="row form-group">

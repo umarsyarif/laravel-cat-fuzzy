@@ -9,6 +9,7 @@
     <meta name="author" content="Hau Nguyen">
     <meta name="keywords" content="au theme template">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <x-head.tinymce-config/>
 
     <!-- Title Page-->
     <title>CAT-UAS SMPN 04 Rumbio Jaya | @yield('title')</title>

@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="row m-t-25">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex justify-content-between">
                         <h5 class="m-0 font-weight-bold">
