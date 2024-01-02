@@ -151,9 +151,9 @@
                     data: 'id',
                     width: "20%",
                     render: function(data, type, row) {
-                        return `<div class="au-btn-group text-center d-flex" role="group">
+                        return `<div class="au-btn-group text-center d-flex justify-content-center" role="group">
                                     <a class="btn btn-info btn-sm" href="{{ route('question.index') }}/edit/${data}" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></a>
-                                    <button type="button" data-target="#modal-delete-question-{{$row->id}}" class="btn btn-danger btn-sm ml-1" data-placement="top" title="Delete" data-toggle="modal" data-target="#hapususer"><i class="fas fa-trash"></i></button>
+                                    <button type="button" data-target="#modal-delete-question-${data}" class="btn btn-danger btn-sm ml-1" data-placement="top" title="Delete" data-toggle="modal" data-target="#hapususer"><i class="fas fa-trash"></i></button>
                                 </div>`;
                     }
                 }
