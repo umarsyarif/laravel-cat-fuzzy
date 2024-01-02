@@ -74,8 +74,7 @@
         </div>
     </div>
 </div>
-@foreach ($questions as $row)
-<div class="modal fade" id="modal-delete-question-{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-delete-question" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -87,24 +86,23 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('question.destroy', $row->id) }}" method="POST" class="form-horizontal">
+                <form id="modal-delete-form" action="{{ route('question.index') }}" method="POST" class="form-horizontal">
                     @csrf
                     @method('DELETE')
                     <div class="row form-group">
                         <div class="col col-md justify-content">
-                            <label>Apakah anda ingin menghapus Soal dengan kode <b style="color: red">{{ $row->question_code }}</b> ini ?</label>
+                            <label>Apakah anda ingin menghapus Soal dengan kode <b style="color: red" id="modal-delete-question-code"></b> ini ?</label>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-danger">Hapus</button>
-                        <button type="reset" class="btn btn-primary" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-@endforeach
 
 @endsection
 
@@ -116,16 +114,24 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    const table = $('#dataTable-pagination');
+    const dataUrlApi = table.data('url');
+    const questionUrl = "{{ route('question.index') }}"
+
+    const deleteQuestion = (id) => {
+        // change url to specific row
+        $('#modal-delete-form').attr('action', `${questionUrl}/${id}`);
+    };
+
     $(document).ready(function() {
         $('#dataTable').DataTable();
 
-        const table = $('#dataTable-pagination');
-        const dataUrl = table.data('url');
         table.DataTable({
             processing: true,
             serverSide: true,
             ajax: {
-                url: dataUrl,
+                url: dataUrlApi,
                 type: "POST",
                 data: function (data) {
                     data.search = $('input[type="search"]').val();
@@ -153,7 +159,7 @@
                     render: function(data, type, row) {
                         return `<div class="au-btn-group text-center d-flex justify-content-center" role="group">
                                     <a class="btn btn-info btn-sm" href="{{ route('question.index') }}/edit/${data}" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></a>
-                                    <button type="button" data-target="#modal-delete-question-${data}" class="btn btn-danger btn-sm ml-1" data-placement="top" title="Delete" data-toggle="modal" data-target="#hapususer"><i class="fas fa-trash"></i></button>
+                                    <button type="button" onclick="deleteQuestion(${data})" data-toggle="modal" data-target="#modal-delete-question" class="btn btn-danger btn-sm ml-1" data-placement="top" title="Delete"><i class="fas fa-trash"></i></button>
                                 </div>`;
                     }
                 }
