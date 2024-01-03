@@ -118,7 +118,7 @@ class ExamController extends Controller
 
         // get next question
         $nextQuestion = $examStudent->getNextQuestion();
-        $answeredQuestions = $examStudent->questions()->with('question')->get();
+        $answeredQuestions = $examStudent->questions()->with('question')->whereNotNull('is_correct')->get();
 
         // stopping criteria
         $isTotalQuestionsLimit = $answeredQuestions->count() == $exam->total_question;
@@ -127,9 +127,10 @@ class ExamController extends Controller
 
         // end the exam
         if ($isTotalQuestionsLimit || $isLowerOrUpperLimit || $isTimeUp){
+            $finalScore = $answeredQuestions->where('is_correct')->sum('question.difficulty_level') / $answeredQuestions->sum('question.difficulty_level') * 100;
             $examStudent->update([
                 'ended_at' => now(),
-                'final_score' => $answeredQuestions->where('is_correct')->sum('question.difficulty_level') / $answeredQuestions->sum('question.difficulty_level') * 100
+                'final_score' => round($finalScore, 2)
             ]);
         }
         $data = [

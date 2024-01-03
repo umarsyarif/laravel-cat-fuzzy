@@ -126,7 +126,7 @@ class Question extends Model
      */
     public function scopeStartingQuestion(Builder $query): void
     {
-        $query->where('difficulty_level', -0.1)->inRandomOrder();
+        $query->where('difficulty_level', 3)->inRandomOrder();
     }
 
 
@@ -136,50 +136,7 @@ class Question extends Model
     public function scopeNextQuestion(Builder $query, $answeredQuestion, $newValue, $isCorrect): void
     {
         $query->whereNotIn('id', $answeredQuestion->pluck('question_id'))
-                ->where('difficulty_level', $isCorrect ? '>' : '<', $newValue)
+                ->where('difficulty_level', $isCorrect ? '>=' : '<=', $newValue)
                 ->orderBy('difficulty_level', $isCorrect ? 'ASC' : 'DESC');
     }
-
-    // public function getNewTheta() {
-    //     // pembentukan himpunan Fuzzy
-    //     // a = different power, b = difficulty level
-    //     $a = $this->different_power;
-    //     $b = $this->difficulty_level;
-
-    //     // μturun = (0,8-x)/(0,8-0,3)
-    //     // μnaik = (x-0,3)/(0,8-0,3)
-    //     $μdifficultyLevel = [
-    //         'turun' => (0.8 - $b) / (0.8 - 0.3),
-    //         'naik' => ($b - 0.3) / (0.8 - 0.3)
-    //     ];
-    //     $μdifferentPower = [
-    //         'turun' => (0.8 - $a) / (0.8 - 0.3),
-    //         'naik' => ($a - 0.3) / (0.8 - 0.3)
-    //     ];
-
-    //     // inferensi
-    //     // αn = $α[-n]
-    //     $α = [
-    //         // $μdifficultyLevel turun && $μdifferentPower turun = kemampuan turun
-    //         min($μdifficultyLevel['turun'], $μdifferentPower['turun']),
-    //         // $μdifficultyLevel turun && $μdifferentPower naik = kemampuan turun
-    //         min($μdifficultyLevel['turun'], $μdifferentPower['naik']),
-    //         // $μdifficultyLevel naik && $μdifferentPower turun = kemampuan naik
-    //         min($μdifficultyLevel['naik'], $μdifferentPower['turun']),
-    //         // $μdifficultyLevel naik && $μdifferentPower naik = kemampuan naik
-    //         min($μdifficultyLevel['naik'], $μdifferentPower['naik']),
-    //     ];
-
-    //     // zn = $z[-n]
-    //     $z = [
-    //         $b - ($b - $a) * $α[0],
-    //         $b - ($b - $a) * $α[1],
-    //         (($b - $a) * $α[2]) + $a,
-    //         (($b - $a) * $α[3]) + $a,
-    //     ];
-
-    //     // defuzzifikasi
-    //     $newTheta = (($α[0] * $z[0]) + ($α[1] * $z[1]) + ($α[2] * $z[2]) + ($α[3] * $z[3])) / array_sum($α);
-    //     return $newTheta;
-    // }
 }

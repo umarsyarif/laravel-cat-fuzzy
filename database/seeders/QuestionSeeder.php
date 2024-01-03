@@ -20,8 +20,8 @@ class QuestionSeeder extends Seeder
         $faker = $this->faker;
         $index = 1;
 
-        // -4 >= difficulty level <= 4
-        for ($i = -4; $i <= 4; $i = $i + 0.01) {
+        // 0.01 >= difficulty level <= 10
+        for ($i = 0.01; $i <= 10; $i = $i + 0.01) {
             Question::create([
                 'question_code' => 'M' . str_pad($index, 3, '0', STR_PAD_LEFT),
                 'question' => $faker->sentence(),

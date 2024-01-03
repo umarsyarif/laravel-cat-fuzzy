@@ -110,7 +110,7 @@
                                     <th>Index Kesukaran</th>
                                     <th>Index Daya Beda</th>
                                     <th>Skor Jawaban</th>
-                                    <th>Theta</th>
+                                    {{-- <th>Theta</th> --}}
                                 </tr>
                                 @foreach ($result->questions as $question)
                                 <tr>
@@ -118,7 +118,7 @@
                                     <td>{{ $question->question->difficulty_level }}</td>
                                     <td>{{ $question->question->different_power }}</td>
                                     <td>{{ $question->is_correct }}</td>
-                                    <td>{{ number_format((float)$question->question->new_theta, 2, '.', '') }}</td>
+                                    {{-- <td>{{ number_format((float)$question->question->new_theta, 2, '.', '') }}</td> --}}
                                 </tr>
                                 @endforeach
                             </tbody>
