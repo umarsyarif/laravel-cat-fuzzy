@@ -24,7 +24,7 @@ class UpdateQuestionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'question_code' => ['required', 'string', 'max:6', 'unique:'.Question::class.',question_code,'.$this->id],
+            'question_code' => ['required', 'string', 'max:10', 'unique:'.Question::class.',question_code,'.$this->id],
             'question' => ['required'],
             'multiple_choice' => ['required'],
             'answer' => ['required'],

@@ -23,7 +23,7 @@ class StoreQuestionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'question_code' => 'required|string|max:6|unique:questions,question_code',
+            'question_code' => 'required|string|max:10|unique:questions,question_code',
             'question' => 'required',
             'multiple_choice' => 'required',
             'answer' => 'required',
