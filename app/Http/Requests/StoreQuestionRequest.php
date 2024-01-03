@@ -27,7 +27,7 @@ class StoreQuestionRequest extends FormRequest
             'question' => 'required',
             'multiple_choice' => 'required',
             'answer' => 'required',
-            'difficulty_level' => 'required|numeric|between:0.01,10',
+            'difficulty_level' => 'required|numeric|between:-4,4',
             'different_power' => 'required|numeric|between:0,2',
         ];
     }

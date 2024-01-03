@@ -25,8 +25,8 @@
                 <div id="timer-per-question" class="h-100 bg-success"></div>
             </div>
             <div class="card-header">
-                {{-- <span>Index kesukaran : {{ $question->difficulty_level }}</span> --}}
-                {{-- <span class="float-right">Index daya beda : {{ $question->different_power }}</span> --}}
+                <span>Index kesukaran : {{ $question->difficulty_level }}</span>
+                <span class="float-right">Index daya beda : {{ $question->different_power }}</span>
             </div>
             <div class="card-body">
                 <p><span>{{ $result->questions()->count() }}. </span>{!! $question->question !!}</p>

@@ -126,7 +126,7 @@ class Question extends Model
      */
     public function scopeStartingQuestion(Builder $query): void
     {
-        $query->where('difficulty_level', 3)->inRandomOrder();
+        $query->where('difficulty_level', -1.5)->inRandomOrder();
     }
 
 
