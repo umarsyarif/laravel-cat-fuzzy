@@ -91,7 +91,7 @@
                     @method('DELETE')
                     <div class="row form-group">
                         <div class="col col-md justify-content">
-                            <label>Apakah anda ingin menghapus Soal dengan kode <b style="color: red" id="modal-delete-question-code"></b> ini ?</label>
+                            <label>Apakah anda ingin menghapus Soal <b style="color: red" id="modal-delete-question-code"></b> ?</label>
                         </div>
                     </div>
                     <div class="modal-footer">
