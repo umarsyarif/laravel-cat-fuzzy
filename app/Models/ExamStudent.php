@@ -19,11 +19,11 @@ class ExamStudent extends Pivot
     public $incrementing = true;
 
     public function getNextQuestion() : ExamStudentQuestion | null {
+        $questions = $this->questions()->get();
         // don't return anything if the exam ended
-        if ($this->ended_at){
+        if ($this->ended_at || $questions->count() == $this->exam->total_question){
             return null;
         }
-        $questions = $this->questions()->get();
         // if no question, create 1st question
         if (!$questions->count()){
             $newQuestion = Question::startingQuestion()->first();
