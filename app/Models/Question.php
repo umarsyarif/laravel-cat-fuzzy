@@ -70,8 +70,8 @@ class Question extends Model
         return Attribute::make(
             get: fn () =>
             [
-                'turun' => (0.8 - $this->difficulty_level) / (0.8 - 0.3),
-                'naik' => ($this->difficulty_level - 0.3) / (0.8 - 0.3)
+                'turun' => (3 - $this->difficulty_level) / (3 - 0),
+                'naik' => ($this->difficulty_level - 0) / (3 - 0)
             ]
         );
     }
@@ -80,8 +80,8 @@ class Question extends Model
     {
         return Attribute::make(
             get: fn () => [
-                'turun' => (0.8 - $this->different_power) / (0.8 - 0.3),
-                'naik' => ($this->different_power - 0.3) / (0.8 - 0.3)
+                'turun' => (2 - $this->different_power) / (2 - 0),
+                'naik' => ($this->different_power - 0) / (2 - 0)
             ],
         );
     }
@@ -126,7 +126,7 @@ class Question extends Model
      */
     public function scopeStartingQuestion(Builder $query): void
     {
-        $query->where('difficulty_level', 0.23)->inRandomOrder();
+        $query->where('difficulty_level', 0.36)->inRandomOrder();
     }
 
 

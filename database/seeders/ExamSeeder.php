@@ -13,12 +13,14 @@ class ExamSeeder extends Seeder
      */
     public function run(): void
     {
-        Exam::create([
-            'name' => 'Ujian Akhir B.Inggriss',
-            'timer' => 120,
-            'timer_per_question' => 120,
-            'total_question' => 25,
-            'is_active' => true
-        ]);
+        for ($i=0; $i < 3; $i++) {
+            Exam::create([
+                'name' => 'Ujian Akhir B.Inggris ' . $i + 1,
+                'timer' => 120,
+                'timer_per_question' => 120,
+                'total_question' => 25,
+                'is_active' => true
+            ]);
+        }
     }
 }

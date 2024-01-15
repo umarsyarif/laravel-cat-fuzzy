@@ -110,7 +110,7 @@
                                     <th>Index Kesukaran</th>
                                     <th>Index Daya Beda</th>
                                     <th>Skor Jawaban</th>
-                                    <th>Theta</th>
+                                    <th>Tingkat Kemampuan</th>
                                 </tr>
                                 @foreach ($result->questions as $question)
                                 <tr>
